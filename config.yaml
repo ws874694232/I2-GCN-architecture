@@ -1,0 +1,34 @@
+model:
+  name: I2-GCN
+  num_nodes: 324
+  input_dim: 1        # Input feature dimension per node
+  hidden_dims: [4, 1] # Output dims for GCN layers
+  activation: relu
+  intra_frame_gcn: True
+  inter_frame_gcn: True
+
+training:
+  epochs: 500
+  batch_size: 4
+  optimizer: Adam
+  learning_rate: 0.001
+  loss_function: MSELoss
+  weight_decay: 0.0
+  dropout: 0.0
+  early_stopping: false
+
+data:
+  dataset_name: Satellite_ROI
+  input_size: [N, 1]  # e.g., number of nodes N x feature dimension
+  mask_type: binary
+  frame_gap: 1
+  superpixel_scale: [100, 200, 300, 400]  # if used in ablation
+
+evaluation:
+  metrics: [IoU, Dice, SSIM, RMSE, R2]
+  test_set: manually_annotated
+
+logging:
+  save_model: true
+  save_path: ./checkpoints/I2-GCN/
+  log_interval: 10
